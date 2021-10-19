@@ -6,6 +6,7 @@ import 'examples/getx/controllers/string_controller.dart';
 import 'examples/getx/navigation/navigation.dart';
 import 'examples/getx/theme/theme_helper.dart';
 import 'examples/getx/translation/translation_keys.dart';
+import 'examples/getx/utils/helper.dart';
 import 'examples/view/screen_2.dart';
 
 void main() {
@@ -60,6 +61,16 @@ class _MyHomePage extends StatelessWidget {
               style: style,
               onPressed: ThemeHelper.changeTheme,
               child: const Text('Temayı Değiştir'),
+            ),
+            ElevatedButton(
+              style: style,
+              onPressed: () => Helper.showSnackBar(title: 'Test', content: 'Merhaba Dünya!'),
+              child: const Text('Show SnackBar'),
+            ),
+            ElevatedButton(
+              style: style,
+              onPressed: () => Helper.showDialog(),
+              child: const Text('Show Dialog'),
             ),
           ],
         ),
