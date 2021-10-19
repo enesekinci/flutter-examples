@@ -7,7 +7,7 @@ class GetConnectProvider extends GetConnect {
     // super.onInit();
     // All request will pass to jsonEncode so CountryModel.fromJson()
 
-    httpClient.defaultDecoder = CountryModel.fromJson;
+    httpClient.defaultDecoder = CountryModel.listFromJson;
     httpClient.baseUrl = 'https://api.com';
 
     // It's will attach 'apikey' property on header from all requests
@@ -19,14 +19,9 @@ class GetConnectProvider extends GetConnect {
     // Even if the server sends data from the country "Brazil",
     // it will never be displayed to users, because you remove
     // that data from the response, even before the response is delivered
-    httpClient.addResponseModifier<CountryModel>((request, response) {
-      CountryModel model = response.body;
-      if (model.countries.contains('Brazil')) {
-        model.countries.remove('Brazilll');
-      }
-    });
+    httpClient.addResponseModifier<CountryModel>((request, response) {});
 
-    httpClient.addAuthenticator((request) async {
+    httpClient.addAuthenticator((Request request) async {
       final response = await get("http://yourapi/token");
       final token = response.body['token'];
       // Set the header
@@ -74,7 +69,9 @@ class CountryModel {
 
   CountryModel(this.id, this.title);
 
-  CountryModel fromJson(Map data) {
+  factory CountryModel.fromJson(Map data) {
     return CountryModel(data['id'], data['title']);
   }
+
+  static List<CountryModel> listFromJson(list) => List<CountryModel>.from(list.map((x) => CountryModel.fromJson(x)));
 }
